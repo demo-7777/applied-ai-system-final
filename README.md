@@ -118,6 +118,18 @@ WARNING [recommender] Low confidence (0.23) for prefs {'genre': 'polka', 'mood':
   - RAG explanation: Library Rain fits your profile because lofi is mellow, low-energy, and
     textured with soft, warm, slightly hazy production. Concretely: genre match: lofi (+2.0); ...
   ```
+- **Fine-Tuning / Specialization (+2)** — [`src/specialize.py`](src/specialize.py) demonstrates specialized model *behavior* via **few-shot exemplars + a constrained "late-night DJ" persona**. The specialized output is proven to **measurably differ** from the baseline explanation using style metrics (persona-marker density, direct address, exclamations). Committed evidence: [`assets/run_specialize.txt`](assets/run_specialize.txt). Run with `python -m src.specialize`.
+
+  ```
+  | Profile          | Baseline style score | Specialized style score | Differs? |
+  |------------------|----------------------|-------------------------|----------|
+  | Chill Lofi       | 0                    | 11                      | YES      |
+  | High-Energy Pop  | 0                    | 11                      | YES      |
+  | Deep Intense Rock| 0                    | 7                       | YES      |
+
+  Baseline:    genre match: rock (+2.0); mood match: intense (+1.0); energy close to 0.85 (+0.94)
+  Specialized: Brace yourself — Storm Runner by Voltline hits with full rock force. No brakes!
+  ```
 
 ---
 

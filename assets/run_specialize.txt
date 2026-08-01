@@ -1,0 +1,20 @@
+# Specialized Output — persona: NOVA (late-night DJ)
+
+| Profile | Baseline style score | Specialized style score | Differs? |
+|---------|----------------------|-------------------------|----------|
+| Chill Lofi | 0 | 11 | YES |
+| High-Energy Pop | 0 | 11 | YES |
+| Deep Intense Rock | 0 | 7 | YES |
+
+### Chill Lofi — Library Rain
+- Baseline:    genre match: lofi (+2.0); mood match: chill (+1.0); energy close to 0.35 (+1.00)
+- Specialized: Easy now — slide into Library Rain by Paper Lanterns and let the lofi haze carry you.
+
+### High-Energy Pop — Sunrise City
+- Baseline:    genre match: pop (+2.0); mood match: happy (+1.0); energy close to 0.8 (+0.98)
+- Specialized: Turn it UP — Sunrise City by Neon Echo is pure pop sunshine, hands in the air!
+
+### Deep Intense Rock — Storm Runner
+- Baseline:    genre match: rock (+2.0); mood match: intense (+1.0); energy close to 0.85 (+0.94)
+- Specialized: Brace yourself — Storm Runner by Voltline hits with full rock force. No brakes!
+

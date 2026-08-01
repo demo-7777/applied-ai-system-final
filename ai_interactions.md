@@ -28,6 +28,18 @@ I added a **retrieval-augmented explanation** step ([`src/rag.py`](src/rag.py)).
 
 ---
 
+## Stretch: Fine-Tuning / Specialization
+
+Without a hosted model to fine-tune, I demonstrated specialized *behavior* the way few-shot prompting does ([`src/specialize.py`](src/specialize.py)): a fixed **"late-night DJ" persona** plus a handful of **few-shot exemplars** constrain every output to one consistent tone. The specialized output is proven to **measurably differ** from the baseline using style metrics (persona-marker count, direct address, exclamations) — baseline style score **0** vs specialized **7–11** across three profiles. Committed evidence: [`assets/run_specialize.txt`](assets/run_specialize.txt).
+
+**Before → after (Deep Intense Rock, top pick *Storm Runner*):**
+- *Baseline:* `genre match: rock (+2.0); mood match: intense (+1.0); energy close to 0.85 (+0.94)`
+- *Specialized:* "Brace yourself — Storm Runner by Voltline hits with full rock force. No brakes!"
+
+**One flawed AI moment during this feature:** the first persona-marker set included the word `close`, which appears in every baseline explanation ("energy *close* to …"). That leaked style points into the baseline (score 2 instead of 0), weakening the "measurably different" claim. I removed `close` from the marker set so the baseline reads a true 0 — a reminder to check that a metric isn't accidentally rewarding the thing it's supposed to contrast against.
+
+---
+
 ## Agentic Workflow (SF8)
 
 > Document your experience using an AI agent (e.g., Cursor Agent, Claude, Copilot) to make multi-step changes autonomously.
