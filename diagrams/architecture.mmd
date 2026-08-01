@@ -1,0 +1,34 @@
+%% Music Recommender + Reliability System — architecture
+%% Data flow: input -> process -> output, with evaluation/testing paths.
+flowchart TD
+    subgraph Input
+        A[Taste Profile\ngenre / mood / energy]
+        C[(songs.csv\ncatalog)]
+    end
+
+    subgraph Process["Core Application Logic (src/recommender.py)"]
+        L[load_songs\nGUARDRAIL: skip malformed rows,\nraise on empty catalog]
+        S[score_song\ngenre +2 / mood +1 / energy sim]
+        R[recommend_songs\nrank top-k + confidence 0-1]
+        G{GUARDRAIL\nconfidence <br/> below threshold?}
+    end
+
+    subgraph Output
+        O[Ranked recommendations\n+ confidence + explanation]
+        W[Low-confidence warning\nlogged + flagged]
+    end
+
+    subgraph Reliability["Reliability / Testing (AI feature)"]
+        E[evaluate.py\nlabeled cases -> accuracy + avg confidence]
+        RPT[Parseable report\nmarkdown table + JSON]
+        T[pytest\nunit tests: confidence, guardrails, harness]
+        H[Human review\nread report / logs]
+    end
+
+    C --> L --> S --> R --> G
+    A --> S
+    G -- ok --> O
+    G -- weak --> W
+    R --> E --> RPT --> H
+    R -.checked by.-> T
+    O -.reviewed by.-> H

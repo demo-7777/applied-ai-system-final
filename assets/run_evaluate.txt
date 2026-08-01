@@ -1,0 +1,85 @@
+INFO [recommender] Loaded 20 songs from data/songs.csv
+WARNING [recommender] Low confidence (0.23) for prefs {'genre': 'polka', 'mood': 'party', 'energy': 0.5} — profile may not match the catalog
+
+| Case | Criterion | Top Pick | Confidence | Result |
+|------|-----------|----------|------------|--------|
+| High-Energy Pop | top pick genre == pop | Sunrise City (pop) | 0.99 | PASS |
+| Deep Intense Rock | top pick genre == rock | Storm Runner (rock) | 0.98 | PASS |
+| Chill Lofi | top pick genre == lofi | Library Rain (lofi) | 1.00 | PASS |
+| Relaxed Jazz | top pick genre == jazz | Coffee Shop Stories (jazz) | 0.99 | PASS |
+| Unknown Genre | flag low confidence (<0.4) | Midnight Coding (lofi) | 0.23 | PASS |
+
+**5/5 cases passed; average confidence 0.84.**
+
+JSON: {
+  "total": 5,
+  "passed": 5,
+  "avg_confidence": 0.84,
+  "cases": [
+    {
+      "case": "High-Energy Pop",
+      "profile": {
+        "genre": "pop",
+        "mood": "happy",
+        "energy": 0.8
+      },
+      "criterion": "top pick genre == pop",
+      "top_pick": "Sunrise City",
+      "top_genre": "pop",
+      "confidence": 0.99,
+      "result": "PASS"
+    },
+    {
+      "case": "Deep Intense Rock",
+      "profile": {
+        "genre": "rock",
+        "mood": "intense",
+        "energy": 0.85
+      },
+      "criterion": "top pick genre == rock",
+      "top_pick": "Storm Runner",
+      "top_genre": "rock",
+      "confidence": 0.98,
+      "result": "PASS"
+    },
+    {
+      "case": "Chill Lofi",
+      "profile": {
+        "genre": "lofi",
+        "mood": "chill",
+        "energy": 0.35
+      },
+      "criterion": "top pick genre == lofi",
+      "top_pick": "Library Rain",
+      "top_genre": "lofi",
+      "confidence": 1.0,
+      "result": "PASS"
+    },
+    {
+      "case": "Relaxed Jazz",
+      "profile": {
+        "genre": "jazz",
+        "mood": "relaxed",
+        "energy": 0.4
+      },
+      "criterion": "top pick genre == jazz",
+      "top_pick": "Coffee Shop Stories",
+      "top_genre": "jazz",
+      "confidence": 0.99,
+      "result": "PASS"
+    },
+    {
+      "case": "Unknown Genre",
+      "profile": {
+        "genre": "polka",
+        "mood": "party",
+        "energy": 0.5
+      },
+      "criterion": "flag low confidence (<0.4)",
+      "top_pick": "Midnight Coding",
+      "top_genre": "lofi",
+      "confidence": 0.23,
+      "result": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+INFO [recommender] Loaded 20 songs from data/songs.csv
+
+=== High-Energy Pop: {'genre': 'pop', 'mood': 'happy', 'energy': 0.8} ===
+
+Sunrise City - Score: 3.98 - Confidence: 0.99
+Because: genre match: pop (+2.0); mood match: happy (+1.0); energy close to 0.8 (+0.98)
+
+Gym Hero - Score: 2.87 - Confidence: 0.72
+Because: genre match: pop (+2.0); energy close to 0.8 (+0.87)
+
+Rooftop Lights - Score: 1.96 - Confidence: 0.49
+Because: mood match: happy (+1.0); energy close to 0.8 (+0.96)
+
+Go Johnny Go - Score: 1.95 - Confidence: 0.49
+Because: mood match: happy (+1.0); energy close to 0.8 (+0.95)
+
+Love Train - Score: 1.90 - Confidence: 0.47
+Because: mood match: happy (+1.0); energy close to 0.8 (+0.90)
+
+
+=== Deep Intense Rock: {'genre': 'hard rock', 'mood': 'intense', 'energy': 0.85} ===
+
+Civil War - Score: 3.90 - Confidence: 0.97
+Because: genre match: hard rock (+2.0); mood match: intense (+1.0); energy close to 0.85 (+0.90)
+
+Dirty Deeds Done Dirt Cheap - Score: 3.00 - Confidence: 0.75
+Because: genre match: hard rock (+2.0); energy close to 0.85 (+1.00)
+
+Ball Breaker - Score: 2.97 - Confidence: 0.74
+Because: genre match: hard rock (+2.0); energy close to 0.85 (+0.97)
+
+Rainbow in the Dark - Score: 1.95 - Confidence: 0.49
+Because: mood match: intense (+1.0); energy close to 0.85 (+0.95)
+
+Storm Runner - Score: 1.94 - Confidence: 0.48
+Because: mood match: intense (+1.0); energy close to 0.85 (+0.94)
+
+
+=== Chill Lofi: {'genre': 'lofi', 'mood': 'chill', 'energy': 0.35} ===
+
+Library Rain - Score: 4.00 - Confidence: 1.00
+Because: genre match: lofi (+2.0); mood match: chill (+1.0); energy close to 0.35 (+1.00)
+
+Midnight Coding - Score: 3.93 - Confidence: 0.98
+Because: genre match: lofi (+2.0); mood match: chill (+1.0); energy close to 0.35 (+0.93)
+
+Focus Flow - Score: 2.95 - Confidence: 0.74
+Because: genre match: lofi (+2.0); energy close to 0.35 (+0.95)
+
+Spacewalk Thoughts - Score: 1.93 - Confidence: 0.48
+Because: mood match: chill (+1.0); energy close to 0.35 (+0.93)
+
+Catch the Rainbow - Score: 1.00 - Confidence: 0.25  ⚠ LOW CONFIDENCE
+Because: energy close to 0.35 (+1.00)
+

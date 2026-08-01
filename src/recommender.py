@@ -1,6 +1,19 @@
 import csv
+import logging
 from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass
+
+logger = logging.getLogger("recommender")
+
+# Maximum achievable score: genre (2.0) + mood (1.0) + perfect energy match (1.0).
+MAX_SCORE = 4.0
+# Below this confidence, a recommendation is flagged as weak (guardrail).
+LOW_CONFIDENCE_THRESHOLD = 0.4
+
+
+def confidence(score: float) -> float:
+    """Normalize a raw compatibility score into a 0.0-1.0 confidence value."""
+    return max(0.0, min(1.0, score / MAX_SCORE))
 
 @dataclass
 class Song:
@@ -74,13 +87,21 @@ def load_songs(csv_path: str) -> List[Dict]:
     float_fields = {"energy", "valence", "danceability", "acousticness"}
     songs: List[Dict] = []
     with open(csv_path, newline="", encoding="utf-8") as f:
-        for row in csv.DictReader(f):
-            row["id"] = int(row["id"])
-            row["tempo_bpm"] = int(row["tempo_bpm"])
-            for field in float_fields:
-                row[field] = float(row[field])
+        reader = csv.DictReader(f)
+        for line_no, row in enumerate(reader, start=2):
+            try:
+                row["id"] = int(row["id"])
+                row["tempo_bpm"] = int(row["tempo_bpm"])
+                for field in float_fields:
+                    row[field] = float(row[field])
+            except (ValueError, TypeError, KeyError) as err:
+                # Guardrail: skip malformed rows instead of crashing the whole run.
+                logger.warning("Skipping malformed row %d in %s: %s", line_no, csv_path, err)
+                continue
             songs.append(row)
-    print(f"Loaded songs: {len(songs)}")
+    if not songs:
+        raise ValueError(f"No valid songs loaded from {csv_path}")
+    logger.info("Loaded %d songs from %s", len(songs), csv_path)
     return songs
 
 def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
@@ -109,16 +130,29 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
 
     return score, reasons
 
-def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
+def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, float, str]]:
     """
     Functional implementation of the recommendation logic.
+    Returns (song, score, confidence, explanation) tuples, ranked highest-first.
     Required by src/main.py
     """
+    if not songs:
+        # Guardrail: refuse to recommend from an empty catalog.
+        raise ValueError("Cannot recommend from an empty song catalog")
+
     scored = []
     for song in songs:
         score, reasons = score_song(user_prefs, song)
-        scored.append((song, score, "; ".join(reasons)))
+        scored.append((song, score, confidence(score), "; ".join(reasons)))
 
     # Ranking Rule: sort by score, highest first, keep the top k.
     scored.sort(key=lambda item: item[1], reverse=True)
-    return scored[:k]
+    top = scored[:k]
+
+    if top and top[0][2] < LOW_CONFIDENCE_THRESHOLD:
+        # Guardrail: warn when even the best match is weak.
+        logger.warning(
+            "Low confidence (%.2f) for prefs %s — profile may not match the catalog",
+            top[0][2], user_prefs,
+        )
+    return top

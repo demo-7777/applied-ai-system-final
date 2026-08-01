@@ -9,7 +9,11 @@ You will implement the functions in recommender.py:
 - recommend_songs
 """
 
-from src.recommender import load_songs, recommend_songs
+import logging
+
+from src.recommender import load_songs, recommend_songs, LOW_CONFIDENCE_THRESHOLD
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s [%(name)s] %(message)s")
 
 
 # Diverse taste profiles for stress testing the recommender.
@@ -25,8 +29,9 @@ def main() -> None:
 
     for name, user_prefs in PROFILES.items():
         print(f"\n=== {name}: {user_prefs} ===\n")
-        for song, score, explanation in recommend_songs(user_prefs, songs, k=5):
-            print(f"{song['title']} - Score: {score:.2f}")
+        for song, score, conf, explanation in recommend_songs(user_prefs, songs, k=5):
+            flag = "  ⚠ LOW CONFIDENCE" if conf < LOW_CONFIDENCE_THRESHOLD else ""
+            print(f"{song['title']} - Score: {score:.2f} - Confidence: {conf:.2f}{flag}")
             print(f"Because: {explanation}")
             print()
 
