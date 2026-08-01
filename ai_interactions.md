@@ -16,6 +16,18 @@ I added an **agentic self-critique loop** ([`src/agent.py`](src/agent.py)) on to
 
 ---
 
+## Stretch: RAG Enhancement
+
+I added a **retrieval-augmented explanation** step ([`src/rag.py`](src/rag.py)). A dependency-free TF-cosine retriever indexes a knowledge base of genre/mood liner notes ([`data/knowledge/`](data/knowledge/)); before explaining a recommendation, the system retrieves the most relevant note and **composes the explanation from that retrieved text** rather than from a fixed template. Committed evidence: [`assets/run_rag.txt`](assets/run_rag.txt).
+
+**Before → after (Chill Lofi, top pick *Library Rain*):**
+- *Baseline:* `genre match: lofi (+2.0); mood match: chill (+1.0); energy close to 0.35 (+1.00)`
+- *RAG-grounded:* "*Library Rain* fits your profile because lofi is mellow, low-energy, and textured with soft, warm, slightly hazy production. Concretely: genre match: lofi (+2.0); …" — retrieved from `lofi.md` at cosine similarity 0.583.
+
+**Helpful AI suggestion:** stripping common stopwords before vectorizing, so genre/mood terms dominate retrieval instead of filler words — this is what makes the retriever correctly pull `lofi.md` for a lofi pick and `pop.md` for a pop pick.
+
+---
+
 ## Agentic Workflow (SF8)
 
 > Document your experience using an AI agent (e.g., Cursor Agent, Claude, Copilot) to make multi-step changes autonomously.

@@ -1,0 +1,12 @@
+# RAG-Grounded Explanations — Before / After
+
+## Chill Lofi — top pick: Library Rain
+- **Baseline explanation:** genre match: lofi (+2.0); mood match: chill (+1.0); energy close to 0.35 (+1.00)
+- **Retrieved doc:** lofi.md (similarity 0.583)
+- **RAG explanation:** Library Rain fits your profile because lofi is mellow, low-energy, and textured with soft, warm, slightly hazy production. Concretely: genre match: lofi (+2.0); mood match: chill (+1.0); energy close to 0.35 (+1.00).
+
+## High-Energy Pop — top pick: Sunrise City
+- **Baseline explanation:** genre match: pop (+2.0); mood match: happy (+1.0); energy close to 0.8 (+0.98)
+- **Retrieved doc:** pop.md (similarity 0.439)
+- **RAG explanation:** Sunrise City fits your profile because pop is bright, hook-driven, and radio-friendly, built around catchy vocal melodies and a strong danceable beat. Concretely: genre match: pop (+2.0); mood match: happy (+1.0); energy close to 0.8 (+0.98).
+

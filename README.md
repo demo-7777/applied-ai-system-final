@@ -109,6 +109,15 @@ WARNING [recommender] Low confidence (0.23) for prefs {'genre': 'polka', 'mood':
 
 - **Agentic Workflow Enhancement (+2)** — an **agentic self-critique loop** ([`src/agent.py`](src/agent.py)) wraps the recommender in a **plan → critique → act → re-check** decision chain. It produces a baseline list, inspects its own output for reliability issues (weak-confidence picks, low artist diversity), revises to fix them, and loops until the list is clean or the revision converges. On the Chill Lofi profile it catches and drops a wrong-genre "energy leak" pick (*Catch the Rainbow*, confidence 0.25) that the baseline kept. Full reasoning traces are committed to [`assets/agent_trace.md`](assets/agent_trace.md) and discussed in [`ai_interactions.md`](ai_interactions.md). Run with `python -m src.agent`.
 - **Test Harness / Evaluation Script (+2)** — `src/evaluate.py` (see Sample Interaction 3) runs labeled profiles and prints a pass/fail + confidence summary.
+- **RAG Enhancement (+2)** — [`src/rag.py`](src/rag.py) adds a dependency-free TF-cosine **retriever** over a knowledge base of genre/mood liner notes ([`data/knowledge/`](data/knowledge/)). Before explaining a pick, the system **retrieves the most relevant note and composes the explanation from it**, so recommendations are grounded in retrieved text rather than a fixed template. Committed before/after evidence: [`assets/run_rag.txt`](assets/run_rag.txt). Run with `python -m src.rag`.
+
+  ```
+  ## Chill Lofi — top pick: Library Rain
+  - Baseline explanation: genre match: lofi (+2.0); mood match: chill (+1.0); energy close to 0.35 (+1.00)
+  - Retrieved doc: lofi.md (similarity 0.583)
+  - RAG explanation: Library Rain fits your profile because lofi is mellow, low-energy, and
+    textured with soft, warm, slightly hazy production. Concretely: genre match: lofi (+2.0); ...
+  ```
 
 ---
 
